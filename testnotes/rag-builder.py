@@ -1,6 +1,8 @@
+import os 
+os.environ["PATH"] += os.pathsep + r"C:\poppler-24.08.0\Library\bin"
+
 import ollama 
 import os
-from information import *
 url = "http://localhost:11434/api/generate"
 
 #1: ingest PDF Files
@@ -15,8 +17,8 @@ url = "http://localhost:11434/api/generate"
 from langchain_community.document_loaders import UnstructuredPDFLoader
 from langchain_community.document_loaders import OnlinePDFLoader
 
-doc_path = "./data/ INSERT PDF NAME"
-model = "llama 3.2"
+doc_path = r"testnotes\testdata\encryption.pdf"
+
 
 #Local PDF file upload
 if doc_path:
@@ -29,7 +31,7 @@ else:
 #preview first page
 
 content = data[0].page_content
-print(content[:100])
+#print(content[:100])
 
 
 #====== 2, EXTRACT text from PDF + split into smaller chunks
@@ -67,7 +69,7 @@ from langchain_ollama import ChatOllama
 
 from langchain_core.runnables import RunnablePassthrough
 from langchain.retrievers.multi_query import MultiQueryRetriever
-
+model = "llama 3.2:latest"
 llm = ChatOllama(model = model)
 
 QUERY_PROMPT = PromptTemplate(
@@ -79,3 +81,20 @@ QUERY_PROMPT = PromptTemplate(
 retriever = MultiQueryRetriever.from_llm(
     vector_db.as_retriever(), llm, prompt=QUERY_PROMPT
 )
+
+#RAG prompt
+template = """Answer the question based ONLY on the following context:
+{context}
+Question: {question}"""
+
+prompt = ChatPromptTemplate.from_template(template)
+
+chain = (
+    {"context":retriever, "question": RunnablePassthrough()}
+    | prompt
+    | llm
+    | StrOutputParser()
+)
+
+res = chain.invoke(input=("What is the document about?",))
+print(res)
