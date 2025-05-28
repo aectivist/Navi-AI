@@ -3,7 +3,7 @@ import ollama
 response = ollama.list()
 
 
-#chat example
+#chat example WITH STREAM
 res = ollama.chat(
     model="llama3.2",
     messages=[
