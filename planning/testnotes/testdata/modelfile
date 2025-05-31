@@ -1,0 +1,8 @@
+FROM llama3.2
+
+#set the temperature to 1 [higher is more creative.
+PARAMETER temperature 0.3
+
+SYSTEM """
+    
+    """
