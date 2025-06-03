@@ -1,2 +1,2 @@
-# Elipson-AI
+# NAVI AI ASSISTANT
 
