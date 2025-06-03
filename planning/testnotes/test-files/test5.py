@@ -1,6 +1,4 @@
-import os
-
-doc_path = r"testnotes\testdata\encryption.pdf"
-abs_path = os.path.abspath(doc_path)
-print("Looking for PDF at:", abs_path)
-print("File exists:", os.path.exists(abs_path))
+base_path = r"C:\Users\aecti\OneDrive\Desktop\Projects\NAVI-AI\planning\dataset_folder\wavs"
+paths = [f"r'{base_path}\\{i}.wav'" for i in range(1, 225)]
+output_line = ", ".join(paths)
+print(output_line)

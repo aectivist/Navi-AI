@@ -1,0 +1,224 @@
+1|wav-1|트기 트기 트기 트기 트기!
+2|wav-2|Ooh, wow! You sure we can drive here?
+3|wav-3|This course looks like it would be fun to race on.
+4|wav-4|Mmm, so dark. I could get used to this. It's relaxing.
+5|wav-5|I'm fine in this darkness. I've got all my sensors.
+6|wav-6|This darkness...it's so...undergroundy!
+7|wav-7|Mmm, that noise bugs me.
+8|wav-8|I can hear people's voices in the wind.
+9|wav-9|おそっ、ふんわぁ
+10|wav-10|How are my navigation skills? Pretty useful, right?
+11|wav-11|I wanna see more shadows. Where are they?
+12|wav-12|Maybe I can rate your fighting skills with some kind of power level.
+13|wav-13|What exactly are shadows I wonder?
+14|wav-14|Shadows are weird. Summer but ugly, but summer cute.
+15|wav-15|It's way different seeing the real thing compared to pics!
+16|wav-16|Hahaha, the scene is so poppy!
+17|wav-17|It's cramped in here, but that's what makes it good.
+18|wav-18|I want to make this interior more functional.
+19|wav-19|Heh heh heh. All the girl's thief suits are so kinky.
+20|wav-20|My thesis is cool too! It's so fun to look at!
+21|wav-21|Heh heh heh! Even expert cosplayers can't make a suit this good!
+22|wav-22|I'm tired. Need sugar. Candy.
+23|wav-23|If you eat chocolate and gum at the same time, they both disappear.
+24|wav-24|Aww, I want some of Sojiro's food. His curry is the best.
+25|wav-25|Buh, I need something strong to drink. My mind's all fuzzy.
+26|wav-26|So bumpy! Whoops! There goes Masoda!
+27|wav-27|Oh, I could use some of Sojiro's coffee.
+28|wav-28|So the other day, I was checking out this foreign military-based server and-
+29|wav-29|on the PC outside. This is totally outdoor activity.
+30|wav-30|Right now, I'm totally into overclocking.
+31|wav-31|collective unconscious. So it's kind of like the internet.
+32|wav-32|Oh, this reminds me. The other day on the internet, there was... ...Hahahaha!
+33|wav-33|Ooh, Phantom Thieves is trending!
+34|wav-34|Why do you go shopping? You can buy anything online.
+35|wav-35|I want a new PC. I guess I'll settle for some new parts.
+36|wav-36|Shopping, huh? I'm still scared to talk to the salespeople.
+37|wav-37|Everyone's going to school, huh? Ha! Miss Dalger.
+38|wav-38|School, huh? I wish I could just use my PC there.
+39|wav-39|I don't need school. I can just look things up online.
+40|wav-40|Yeah, go go! From Rome!
+41|wav-41|Yeah! Faster! Faster!
+42|wav-42|Muna, this is awesome! Now transform into flight mode!
+43|wav-43|That floppy part of Joker's coat is so cool.
+44|wav-44|One day, I want to look good and close like Panthers.
+45|wav-45|I wish I could turn into a car like Mona does.
+46|wav-46|Wow, Skull, you're a terrible singer, but it's kind of fun.
+47|wav-47|Why? Dark is nice and relaxing.
+48|wav-48|Oh, awesome! I'm so excited!
+49|wav-49|It's like, guwaa! Like a big hair dryer.
+50|wav-50|Skull gets knocked out a lot too, huh?
+51|wav-51|Refreshing! More refreshing than soda?
+52|wav-52|Humans are kind of scarier in some ways.
+53|wav-53|Radio's are nice. I like the late night shows.
+54|wav-54|Ooh, and a massage chair! Get on it, Mona!
+55|wav-55|All my footage of it looks super weird. Even featherman would think we're freaks.
+56|wav-56|I use a cooling pad on the back of my neck. You ought to try it.
+57|wav-57|Oh yeah, that crutch!
+58|wav-58|I always want something sweet after something salty.
+59|wav-59|Are there any vending machines around? It is the subway.
+60|wav-60|Joker can do a bunch too. Who's stronger?
+61|wav-61|Ooh, showing off. Do you have a six-pack skull?
+62|wav-62|All budget local commercials are the best, right?
+63|wav-63|Yeah, I won't want to shoot paintballs!
+64|wav-64|I'm impressed you're even going to school. No can do.
+65|wav-65|Sounds cool. Yeah, let's blast through.
+66|wav-66|Does Mona even have an accelerator?
+67|wav-67|Then let's squat instead. Ready? Go!
+68|wav-68|Is it hurt? You okay Mona?
+69|wav-69|Yeah, it's tough being stuck on the tracks of life. Ana, you're so deep!
+70|wav-70|You're trying to act so cool. Look out or you'll get tickled.
+71|wav-71|Sounds the same as any other place full of people.
+72|wav-72|What are they saying? Maybe let's get some pizza.
+73|wav-73|Fighting's fun!
+74|wav-74|Yeah, I'll back you up with all my skills.
+75|wav-75|We need to be efficient in here. You need my help, Joker?
+76|wav-76|Don't worry about it. Oops, drop some candy.
+77|wav-77|But naked except for a scarf, Mona's got guts.
+78|wav-78|I like aerodynamic styles too. We should stick some mods on you.
+79|wav-79|I like the Spinny Sushi too. I feel like Flon, and Mellon.
+80|wav-80|There's new ones all the time too! I want to finish my collection.
+81|wav-81|If you had a fuel door, we could just dump a drink in there.
+82|wav-82|I wanna use my eye drops, but I can't when it's shaking so much!
+83|wav-83|Sometimes you can find out what they're really thinking online.
+84|wav-84|I can't even tell what you're going for. What kind of mascot are you?
+85|wav-85|Leave the internet to me! You guys can handle everything else.
+86|wav-86|Hehe, that's what makes it fun.
+87|wav-87|I don't like walking in a crowd. Shopping online is more fun.
+88|wav-88|But aren't small spaces kinda nice? I like them.
+89|wav-89|Yeah, being a thief is all about making cold hard cash!
+90|wav-90|I'll be your guide, Mona. Let's do our best.
+91|wav-91|Whoa, Panther! They're huge! I don't know where to look when they shake!
+92|wav-92|Only one thing to do, drive on in!
+93|wav-93|Thanks Mona, walking is really tiring.
+94|wav-94|Probably, considering where we are, a lot of them too.
+95|wav-95|Sound bounces off everything in here. It's tough to search using audio signals.
+96|wav-96|You gotta have the right pose. Everyone have theirs down?
+97|wav-97|You'd feel sorry for them if they were cute. It's better that they're all monster-y!
+98|wav-98|No holds barred, weapons, personas, cheap shots, anything goes!
+99|wav-99|If you have a racing controller, you can just practice at home.
+100|wav-100|But you look like you're having the most fun in battle, Panther.
+101|wav-101|And tails are so cool, I don't want to if I could.
+102|wav-102|Sweet, huh? So you're a dessert girl!
+103|wav-103|You gotta check out the new stuff, right? Joker does it too!
+104|wav-104|HOT CHOCOLATE! GIMME CHOCOLATE!
+105|wav-105|Games are better than studying. Huh, could you make studying a game?
+106|wav-106|Can't wait for Thursday, right? Another one in the backlog.
+107|wav-107|Exploring is basically a game already. We gotta clear this floor.
+108|wav-108|Some DVRs can record all channels at once. Not that you'd have time to watch everything.
+109|wav-109|Shopping day with Panther, huh? Ooh, a social event.
+110|wav-110|They say the walls have eyes, and as long as they watch you, you'll never boil. Wait.
+111|wav-111|I don't like weird teachers. Well, actually, I just don't like teachers.
+112|wav-112|You're really into it, Panther. You're bouncing all over the place!
+113|wav-113|Hehe, I wonder what Mona's max speed is.
+114|wav-114|Is there a secret button somewhere? Poop, poke!
+115|wav-115|I never have enough time. There's so much stuff I wanna do.
+116|wav-116|Oh, I see! You're a Trangie Kainari!
+117|wav-117|Wow, your face is super pale. Oh wait, that's normal.
+118|wav-118|Should I save a picture then? I'll print it out later.
+119|wav-119|Don't worry, Fox. I'm scouting.
+120|wav-120|Whoa! That sounds awesome!
+121|wav-121|I know.
+122|wav-122|Exactly! You gotta think when you fight. War is a mind game.
+123|wav-123|It'd be hard to replicate them, even with CG.
+124|wav-124|Yeah, I get like them after an all-nighter.
+125|wav-125|Comfort is important. The seat in my room is optimized for relaxing.
+126|wav-126|Oh, yeah, let's make it one of those cars with the anime stuff all over it.
+127|wav-127|Sounds like a plan. Want to make real world versions of them later?
+128|wav-128|Then your new code name can be, Tonneke.
+129|wav-129|That sucks. So what you're always makes dinner for me.
+130|wav-130|See, Fox gets it. Dr. Selt is a drink for the brain.
+131|wav-131|A marathon? I can't believe that's a hobby for some people.
+132|wav-132|Ugh! Nobody's draining my blood!
+133|wav-133|Oh, you interested? I could give you a crash course.
+134|wav-134|Hold on, let me look it up for you.
+135|wav-135|You know, there's this thing called online shopping.
+136|wav-136|Loaners are cool, man. Screw the social types.
+137|wav-137|Oh, they're kind of like their reviews on shopping sites, right?
+138|wav-138|Yeah, yeah, do it!
+139|wav-139|Let's katana maintenance. Do you just sharpen it? Doesn't that sound get on your nerves?
+140|wav-140|Yikes, cars are totally your weakness. Hang in there.
+141|wav-141|This meta versus full of mysteries. It's pretty fun.
+142|wav-142|Ooh, that sounds like fun! I'll keep a lookout!
+143|wav-143|I think it's nice. I'm good as long as I have the light in my monitor.
+144|wav-144|whose voice is it? I could record it and analyze it.
+145|wav-145|Maybe if we use a voice translator, we could figure out what they're saying.
+146|wav-146|Yeah, out of all of us, Queen's the most extreme in a fight.
+147|wav-147|Maybe they eat humans. Oh geez, I just freaked myself out.
+148|wav-148|It talks, it rides. Mona's pretty awesome.
+149|wav-149|I wonder how much longer till we have full on self-driving cars?
+150|wav-150|Really? I like mine!
+151|wav-151|Ha ha, you look good in it.
+152|wav-152|I get perfect dietary balance from supplements and nutrition bars.
+153|wav-153|Sweet then salty, that's a dangerous loop.
+154|wav-154|Roger that! You're kinda like Sojiro Queen.
+155|wav-155|Yeah, he's kinda like Soji Ronal. Hey Joker, what was that face for?
+156|wav-156|You're amazing, Queen. I don't even like walking.
+157|wav-157|No, don't! They might already have everything exactly where they wanted!
+158|wav-158|If anything happens, I'll look it up. Don't worry about him.
+159|wav-159|Ooh, have you read all the niche stuff? I'll make a recommendation list.
+160|wav-160|I have a couple I follow too. They're all online, of course.
+161|wav-161|They come from America, right? Gotta import the good stuff.
+162|wav-162|I wonder which of us stands out the most.
+163|wav-163|That's what I've been saying!
+164|wav-164|Queen really transforms sometimes. I like it.
+165|wav-165|Yeah, I wanna find out what's there.
+166|wav-166|Yeah, I don't know what to do when I play all those open world and sandbox games.
+167|wav-167|stiff shoulders, huh? Panther looks like she'd get them a lot too.
+168|wav-168|I read the subway's been around for 80 years or so. It's older than us.
+169|wav-169|The face is easy. You just put your right hand on the wall and go forward without lifting it.
+170|wav-170|Secret train stations are a big deal in real life too.
+171|wav-171|Oh, and his eyes are useful. I wonder if I could get mine to glow.
+172|wav-172|I'm searching, so don't worry. You can lighten up a little.
+173|wav-173|Concert, huh? I'd go to a show, but all those people...
+174|wav-174|A shadow song! Wish I could look up the lyrics!
+175|wav-175|My room gets like that too if I don't open the window for a while.
+176|wav-176|She's got that whole two-faced thing going on.
+177|wav-177|Oh, what was that called? Sadies, saddest?
+178|wav-178|She just can't stop. Now where is a real battle nut?
+179|wav-179|Character, what does that even mean? I'm gonna look it up
+180|wav-180|A shadow picture, huh? We'll bring my tablet next time and try it.
+181|wav-181|I never liked field trips, but I loved Sojiro's bento boxes.
+182|wav-182|Let's make it even cooler! Custom Paint job mods!
+183|wav-183|I'd like it even more if it were a teensy bit smaller.
+184|wav-184|We look like a pile of freaks.
+185|wav-185|Fuck's this mask just makes me wanna doodle on it.
+186|wav-186|You look good in a war, you'd be perfect for cosplaying.
+187|wav-187|Uuuh, just thinking about it is making me full.
+188|wav-188|Mushrooms might work. And then Fox could eat them.
+189|wav-189|Sogeros says I'm only supposed to have one a week.
+190|wav-190|Ooh, a smoothie. That's a real celebrity drink.
+191|wav-191|I want some of Sojiro's coffee.
+192|wav-192|It's from Joker and Mona, and maybe a little from me too.
+193|wav-193|I could probably find an automatic flower water online.
+194|wav-194|Cherry tomatoes, grow them and eat them.
+195|wav-195|I read that plants can hear music. Nature's incredible.
+196|wav-196|I read a couple of them. I sucked.
+197|wav-197|I stay up online and then all of a sudden, it's light outside.
+198|wav-198|Oh, that's crazy, Newar! Can I hang on your arm next time?
+199|wav-199|I can check online. Want me to download some catalogs?
+200|wav-200|Wait, what? You don't put it on a card?
+201|wav-201|School, huh? I just wish there weren't classes or people.
+202|wav-202|Looking at turtles makes me want to sit under a kotatsu.
+203|wav-203|It's the same as the internet then. The Phantom Theives will take over conversations everywhere.
+204|wav-204|Roger, let's do it!
+205|wav-205|Taxi to the ends of the world and step on it!
+206|wav-206|Ah, you sound like a total beauty thief!
+207|wav-207|I wanna drive too. I wonder if he'll let me.
+208|wav-208|I know what you mean. I want to ride on the tracks in real life.
+209|wav-209|Yeah, yeah, we're all really tough.
+210|wav-210|Maybe the hidden meaning is that it means nothing.
+211|wav-211|Because it's the subway! Dun dun dun!
+212|wav-212|Hey, no scary talk. Queen doesn't like it.
+213|wav-213|We are professional and don't compliment me so much. It's kind of embarrassing.
+214|wav-214|Yep, he thinks several moves ahead. I won't lose though.
+215|wav-215|Hey, they let their guard down. If we don't run him over, they'll attack us.
+216|wav-216|But the shakiness is the best part! You gotta learn what's good, Crow.
+217|wav-217|Yeah, but I'm the coolest, right?
+218|wav-218|I wanna try Panther suit. It's red. Plus it has a tail.
+219|wav-219|Scruti, coffee's the real deal. So D-Rose is the BEST!
+220|wav-220|Worker ants work hard. They stay way busier than I do.
+221|wav-221|Yeah, well, internet discussions can be manipulated.
+222|wav-222|Join the club.
+223|wav-223|Ready for action, huh? I can handle offensive support.
+224|wav-224|Make sure you pull your weight.
