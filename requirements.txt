@@ -12,3 +12,7 @@ fastembed
 pdfplumber
 sentence-transformers
 elevenlabs
+
+whisper
+pyaudio
+wave
