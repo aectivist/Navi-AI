@@ -112,5 +112,7 @@ class Navi:
 while True:
     print("Input:")
     input = input()
-    Navi.Navi(input)
+    NaviOutput = Navi.Navi(input)
+    Navi.TextToSpeech(NaviOutput)
+    time.sleep(1)  # Wait for a second before the next input
     

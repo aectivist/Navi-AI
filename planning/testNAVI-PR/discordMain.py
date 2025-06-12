@@ -10,6 +10,8 @@ logger = SettingsAPI_Disc.logging.getLogger("bot")
 def run():
     intents = discord.Intents.default()
     intents.message_content = True  # Enable message content intent if needed
+    intents.members = True # Enable members intent if needed
+    
 
     bot = commands.Bot(command_prefix='!', intents=intents)
 
@@ -17,17 +19,12 @@ def run():
     async def on_ready():
         logger.info(f'Logged in as {bot.user} (ID: {bot.user.id})')
         print("____________")
-
-    @bot.command(
-            aliases=['p'],
-            help="This is help",
-        description="This is description",
-        brief = "This is brief"
-    )
-
+    
+    @bot.command()
     async def ping(ctx):
-        """Answers with pong"""
-        await ctx.send('Pong!')
+        #await ctx.message.author.send("Hello")
+        discord.utils.get()
+
 
     @bot.command()
     async def input(ctx, *what):
@@ -35,8 +32,6 @@ def run():
         res = ollama.generate(model="NAVI", prompt=input)
         output = str(res["response"])
         await ctx.send(output)
-    
-    
 
     bot.run(SettingsAPI_Disc.DISCORDAPI, root_logger=True)  
 
@@ -45,3 +40,7 @@ try:
         run()
 except Exception as e: 
     print(f"Error in Discord Bot: {e}")
+
+#async def ping(ctx):
+#        """Answers with pong"""
+#        await ctx.send('Pong!')
