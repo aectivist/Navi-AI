@@ -92,22 +92,22 @@ class Navi:
 
     #NAVI
     def Navi(result):
-        try:
-            #ollama response
-            res = ollama.generate(model="NAVI", prompt=result)
-            output = str(res["response"])
-            
-            #emotion detection
-            emotion_labels = emotion(output)
+        #ollama response
+        res = ollama.generate(model="NAVI", prompt=result)
+        output = str(res["response"])
+        print(output)
+        return output
+
+
+    def TextToSpeech(response):
+        #emotion detection
+            emotion_labels = emotion(response)
             print(emotion_labels)
 
             #text to speech
-            audio_output = tts.tts(output)
+            audio_output = tts.tts(response)
             sd.play(audio_output, samplerate=22050)  
             sd.wait()  
-
-        except Exception as e:
-            print(f"Error in NAVI: {e}")
 
 while True:
     print("Input:")
