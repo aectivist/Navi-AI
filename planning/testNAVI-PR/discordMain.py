@@ -3,6 +3,7 @@ import random
 import discord
 from discord.ext import commands
 import ollama
+
 #ollama 
 url = "http://localhost:11434/api/generate"
 
