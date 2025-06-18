@@ -9,7 +9,7 @@ import shlex
 from SettingsAPI_Disc import weather_api_key
 from information import CodeModelInfo #just in case
 
-
+Navi_Function_Usecase = 0
 Function_Passed = 0
 
 #FUNCTIONS:=======================================================================
@@ -88,8 +88,13 @@ def get_weather_tool():
     }
 
 def should_enable_tools(prompt: str) -> bool: #specific keywords to enable tools
-    keywords = ["stocks", "stock", "weather", "price", "city", "temperature", "humidity", "wind", "make me a program", "generate code", "write code", "create code"]
-    return any(word in prompt.lower() for word in keywords)
+    global Navi_Function_Usecase
+    print (Navi_Function_Usecase)
+    if Navi_Function_Usecase == 1:
+        keywords = ["me the stocks", "stocks for", "weather", "price for", "city", "temperature", "humidity", "wind", "me a program that", "generate code", "write code", "create a code"]
+    elif Navi_Function_Usecase == 2:
+        keywords = ["me the stocks", "stocks for", "weather", "price for", "city", "temperature", "humidity", "wind"]
+        return any(word in prompt.lower() for word in keywords)
 
 #Creates the available functions that can be called by the model
 
@@ -150,7 +155,8 @@ tools_list = [
 
 #Function to handle the NAVI model and its function calls
 def NAVI_FUNCTION():
-    global Function_Found
+    global Function_Found, Navi_Function_Usecase
+    Navi_Function_Usecase = 1
     messages = [ # Initial system message to set context
          {
             "role": "system",
@@ -212,14 +218,73 @@ def NAVI_FUNCTION():
         
         # Generate final response after all tool calls
         final_response = ollama.chat(model="NAVI", messages=messages)
+        
         print("Final Response:", final_response['message']['content'])
+        return final_response['message']['content']
             
 
-                
-NAVI_FUNCTION()
- 
-            
 
+
+          
+def DISCORD_NAVI_FUNCTION(prompt: str):
+    global Function_Found, Navi_Function_Usecase
+    Navi_Function_Usecase = 2
+    
+    # Call model
+    messages = []
+    if should_enable_tools(prompt):
+        messages.append( # Initial system message to set context
+            {
+            "role": "system",
+            "content": "You will receive structured data (like JSON strings). When you do, interpret it and explain it clearly in a natural sentence."
+            }
+        )
+        messages.append({'role': "user", "content": prompt})
+        response = ollama.chat(model="NAVI", messages=messages, tools=tools_list)
+    else:
+        messages.append({'role': "user", "content": prompt})
+        response = ollama.chat(model="NAVI", messages=messages)
+        return response['message']['content']
+
+    messages.append(response['message'])
+
+    if not response['message'].get('tool_calls'):
+        print("No function calls found in the response.")
+        print(response['message']['content'])
+
+    # Map available functions
+    available_functions = {
+        "get_stock_price": get_stock_price,
+        "get_weather": lambda city: get_weather(city, weather_api_key)
+    }
+
+    for tool in response['message']['tool_calls']:
+        name = tool['function']['name']
+        args = tool['function']['arguments']  
+
+        function_to_call = available_functions.get(name)
+        if function_to_call:
+            print(f"Calling: {name} with args: {args}")
+            result = function_to_call(**args)
+
+            messages.append({
+                "role": "tool",
+                "name": name,
+                "content": result if isinstance(result, str) else json.dumps(result)
+            })
+
+            print("Function Output:", result)
+            Function_Found = True
+        else:
+            print(f"Function {name} not found.")
+
+
+
+    # Generate final response after all tool calls
+    final_response = ollama.chat(model="NAVI", messages=messages)
+
+    print("Final Response:", final_response['message']['content'])
+    return final_response['message']['content']
 
 #so cooked
 
