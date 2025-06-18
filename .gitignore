@@ -1,5 +1,5 @@
 /.venv
 z_archive_folder
-planning/testNAVI-PR/SettingsAPI_Disc.py
+scripts/testNAVI-PR/SettingsAPI_Disc.py
 /logs
-/planning/testNAVI-PR/__pycache__
+/scripts/testNAVI-PR/__pycache__

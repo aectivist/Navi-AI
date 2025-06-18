@@ -3,6 +3,7 @@ import random
 import discord
 from discord.ext import commands
 import ollama
+import NaviTasks
 
 #ollama 
 url = "http://localhost:11434/api/generate"
@@ -12,6 +13,7 @@ def run():
     intents = discord.Intents.default()
     intents.message_content = True  # Enable message content intent if needed
     intents.members = True # Enable members intent if needed
+    Bot_is_active = True
     
 
     bot = commands.Bot(command_prefix='!', intents=intents)
@@ -29,9 +31,8 @@ def run():
 
     @bot.command()
     async def input(ctx, *what):
-        input = " ".join(what)
-        res = ollama.generate(model="NAVI", prompt=input)
-        output = str(res["response"])
+        input = " ".join(what)       
+        output = str(NaviTasks.DISCORD_NAVI_FUNCTION(input))
         await ctx.send(output)
 
     bot.run(SettingsAPI_Disc.DISCORDAPI, root_logger=True)  
