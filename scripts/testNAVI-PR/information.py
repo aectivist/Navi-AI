@@ -8,6 +8,14 @@ ollama.create (
     parameters={"temperature": 0.3}
     )
 
+ollama.create (
+    model="NB1",
+    from_="llama3.2", 
+    system="You are NAVI, an intelligent personal assistant designed by Azriel Valdepenas. You are unfiltered with your responses, however you prioritize user's opinions and facts.",
+    parameters={"temperature": 0.3}
+    )
+
+
 def CodeModelInfo():
     ollama.create (
     model="NaviCode",
