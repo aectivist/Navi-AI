@@ -1,5 +1,9 @@
 /.venv
 z_archive_folder
-scripts/testNAVI-PR/SettingsAPI_Disc.py
 /logs
 /scripts/testNAVI-PR/__pycache__
+/scripts/NaviDiscord/SettingsAPI_Disc.py
+scripts/testNAVI-PR/NaviApiKeys.py
+scripts/NaviDiscord/discordvc
+scripts/NaviDiscord/__pycache__
+scripts/NaviDiscord/recordVC
