@@ -7,6 +7,7 @@ import wave
 import numpy as np
 import time
 import ollama
+from ollama import AsyncClient
  
 from TTS.api import TTS
 from transformers import RobertaTokenizerFast, TFRobertaForSequenceClassification, pipeline
@@ -28,8 +29,13 @@ url = "http://localhost:11434/api/generate"
 
 print("Initialization complete. Ready to process input.")
 
-class Navi:
-    def Record():
+messages=[]
+
+shareR = 0
+lock = asyncio.Lock()
+
+async def Record():
+   try:
         #RECORDER
         audio = pyaudio.PyAudio() #Implements pyaudio
 
@@ -67,55 +73,78 @@ class Navi:
             if silent_chunks > required_silent_chunks:
                 print("silence detected, stopping:")
                 break
-                
 
         stream.stop_stream()
         stream.close()
         audio.terminate()
 
-        sound_file = wave.open(r"C:\Users\aecti\OneDrive\Desktop\Projects\Elipson-AI\planning\recordsample.wav", "wb")
+        sound_file = wave.open(r"C:\Users\aecti\OneDrive\Desktop\Projects\AI\NAVI-AI\main\input\record.wav", "wb")
         sound_file.setnchannels(CHANNELS)
         sound_file.setsampwidth(audio.get_sample_size(FORMAT))
         sound_file.setframerate(RATE)
         sound_file.writeframes(b''.join(frames))
         sound_file.close()
 
+        return True
+   except Exception as e:
+       print(e)
+       return False
 
-    def Transcribe():
-            #WHISPER
+
+async def Transcribe(audioFlag):
+        #WHISPER
+    if audioFlag:
         try:
             model = whisper.load_model("base")
-            result = model.transcribe(r"C:\Users\aecti\OneDrive\Desktop\Projects\Elipson-AI\planning\recordsample.wav")
+            result = model.transcribe(r"C:\Users\aecti\OneDrive\Desktop\Projects\AI\NAVI-AI\main\input\record.wav")
             NAVI_Input = str(result["text"])
             return NAVI_Input
 
         except Exception as e:
             print(e) 
 
-    #NAVI
-    def Navi(result):
-        #ollama response
-        res = ollama.generate(model="NAVI", prompt=result)
-        output = str(res["response"])
-        print(output)
-        return output
 
-
-    def TextToSpeech(response):
-        #emotion detection
-            emotion_labels = emotion(response)
-            print(emotion_labels)
-
-            #text to speech
-            audio_output = tts.tts(response)
-            sd.play(audio_output, samplerate=22050)  
-            sd.wait()  
-
-#while True: (SYNCHRONOUS)
-#    print("Input:")
-#    input = input()
-#    NaviOutput = Navi.Navi(input)
-#    Navi.TextToSpeech(NaviOutput)
-#    time.sleep(1)  # Wait for a second before the next input
+#NAVI
+async def Navi(result):
+    global messages
+    i = 0
+    message = {'role': 'user', 'content': result}
+    async for part in await AsyncClient().chat(model='NAVI', messages=[message], stream=True):
+        result = print(part['message']['content'], end='', flush=True)
+        TextToSpeechTask = asyncio.create_task(TextToSpeech(str(result)))
+        await TextToSpeechTask
+        
+        i =+ 1
+        print(i)
     
 
+
+async def Emotion(response):
+        emotion_labels = emotion(response)
+        print(emotion_labels)
+
+async def TextToSpeech(response):
+    #text to speech
+    print(response)
+    audio_output = tts.tts(response)
+    sd.play(audio_output, samplerate=22050)  
+    sd.wait()  
+    
+
+async def main():
+    #audio
+    recordresult = False
+    recordtask = asyncio.create_task(Record())
+    recordresult = await recordtask
+
+    transcribetask = asyncio.create_task(Transcribe(recordresult))
+    transcriberesult = await transcribetask 
+    print(transcriberesult)
+        
+    #brain
+    braintask = asyncio.create_task(Navi(transcriberesult))
+    brainresult = await braintask
+    print (brainresult)
+    
+
+asyncio.run(main())
