@@ -15,6 +15,7 @@ from transformers import RobertaTokenizerFast, TFRobertaForSequenceClassificatio
 import sounddevice as sd
 
 import asyncio 
+import re #to fix the wordnone issue 
 
 #for emotion detection
 tokenizer = RobertaTokenizerFast.from_pretrained("arpanghoshal/EmoRoBERTa")
@@ -99,23 +100,36 @@ async def Transcribe(audioFlag):
             result = model.transcribe(r"C:\Users\aecti\OneDrive\Desktop\Projects\AI\NAVI-AI\main\input\record.wav")
             NAVI_Input = str(result["text"])
             return NAVI_Input
-
+        
         except Exception as e:
             print(e) 
 
 
 #NAVI
+i = 0
+regexPattern = r'[^.!?]*[.!?]*"?+ " " + [A-Z]'
+sentence = ""
+sentenceFound = False
 async def Navi(result):
-    global messages
-    i = 0
-    message = {'role': 'user', 'content': result}
-    async for part in await AsyncClient().chat(model='NAVI', messages=[message], stream=True):
-        result = print(part['message']['content'], end='', flush=True)
-        TextToSpeechTask = asyncio.create_task(TextToSpeech(str(result)))
-        await TextToSpeechTask
+    try:
+        global messages, sentence
+    
+        message = {'role': 'user', 'content': result}
+        async for part in await AsyncClient().chat(model='NAVI', messages=[message], stream=True):
+            content = part['message']['content'] #seperates the sentence.
+            sentence += content
+            while any(EndsWith in sentence for EndsWith in ['.', '?', '!']): #SENTENCE FINDER
+                for EndsWith in ['.', '?', '!']:
+                    if EndsWith in sentence:
+                        complete_sentence, sentence = sentence.split(EndsWith, 1)
+                        newCompleteSentence = str(complete_sentence + EndsWith)
+                        TextToSpeechTask = asyncio.create_task(TextToSpeech(newCompleteSentence))
+                        await TextToSpeechTask
+    except Exception as e:
+        print(e)
         
-        i =+ 1
-        print(i)
+        
+        
     
 
 
@@ -134,17 +148,21 @@ async def TextToSpeech(response):
 async def main():
     #audio
     recordresult = False
-    recordtask = asyncio.create_task(Record())
-    recordresult = await recordtask
-
-    transcribetask = asyncio.create_task(Transcribe(recordresult))
-    transcriberesult = await transcribetask 
-    print(transcriberesult)
+    try:
+        recordtask = asyncio.create_task(Record())
+        recordresult = await recordtask
+        transcribetask = asyncio.create_task(Transcribe(recordresult))
         
-    #brain
-    braintask = asyncio.create_task(Navi(transcriberesult))
-    brainresult = await braintask
-    print (brainresult)
+        
+        transcriberesult = await transcribetask 
+        print(transcriberesult)
+            
+        #brain
+        braintask = asyncio.create_task(Navi(transcriberesult))
+        brainresult = await braintask
+        print (brainresult)
+    except Exception as e:
+        print(e)
     
 
 asyncio.run(main())
