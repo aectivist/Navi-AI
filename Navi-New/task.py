@@ -221,5 +221,3 @@ def NAVI_FUNCTION():
         print("Final Response:", final_response['message']['content'])
         return final_response['message']['content']
             
-
-print("input: ")
