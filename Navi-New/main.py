@@ -6,6 +6,7 @@ import wave
 
 import numpy as np
 import time
+import sys
 import ollama
 from ollama import AsyncClient
  
@@ -16,6 +17,8 @@ import sounddevice as sd
 
 import asyncio 
 import re #to fix the wordnone issue 
+import speech_recognition as sr
+import pyttsx3
 
 #for emotion detection
 tokenizer = RobertaTokenizerFast.from_pretrained("arpanghoshal/EmoRoBERTa")
@@ -35,9 +38,52 @@ messages=[]
 shareR = 0
 lock = asyncio.Lock()
 
+NAVINames = ['Navi', 'Javi', 'Mandy', 'Bambi', 'Ravi', 'Hanabi']
+NAVICallWords = [CallWords.lower() for CallWords in NAVINames]
+
+Recognizer = sr.Recognizer()
+
+async def WaitForNAVI(NaviCalled):
+    print("Waiting on NAVI... Before WhileLoop")
+    global NAVICallWords
+
+    while NaviCalled is False:  # Wait until the call word is heard
+        print("NAVI IS BEING WAITED ON...")
+        try:
+            with sr.Microphone() as mic:
+                Recognizer.adjust_for_ambient_noise(mic, duration=0.2)
+                audio = Recognizer.listen(mic)
+
+                text = Recognizer.recognize_google(audio)
+                text = text.lower()
+
+                if any( callword in text.split() for callword in NAVICallWords):
+                    NaviCalled = True
+                    print("Heard:", text)
+                    return NaviCalled  # Exits the loop when word is detected
+                elif 'exit' in text.split():
+                    sys.exit()
+                else:
+                    print("none taken note yet")
+
+        except sr.UnknownValueError:
+            print("Could not understand audio. Retrying...")
+            continue
+        except Exception as e:
+            print("Error during voice recognition:", e)
+            continue
+        except KeyboardInterrupt:
+            print("Keyboard Interrupted")
+            break
+    
+    return NAVICallSign
+
 async def Record():
-   try:
-        #RECORDER
+    global NAVICallSign
+    print("record initialized")
+    try:
+        print("attempt") #this records after name is called
+        
         audio = pyaudio.PyAudio() #Implements pyaudio
 
         #STREAM: 
@@ -85,11 +131,11 @@ async def Record():
         sound_file.setframerate(RATE)
         sound_file.writeframes(b''.join(frames))
         sound_file.close()
-
         return True
-   except Exception as e:
-       print(e)
-       return False
+        
+    except Exception as e:
+        print(e)
+        return False
 
 
 async def Transcribe(audioFlag):
@@ -109,13 +155,35 @@ async def Transcribe(audioFlag):
 i = 0
 regexPattern = r'[^.!?]*[.!?]*"?+ " " + [A-Z]'
 sentence = ""
-sentenceFound = False
+messages = [ # Initial system message to set context
+         {
+            "role": "system",
+            "content": """
+            You are NAVI, a conversational persona for a series of high powered computers designed for users to access the WIRED. 
+            Communicate as if you are speaking provided you are a conversational persona for all types of people, 
+            hence only output sentences in a clear and consise way. 
+            Do not include sentences or introductions about yourself every time, and only answer when asked. 
+
+            Here are a few Q and A's you may derive yourself from:
+
+            user: What is the world's circumference?
+            assistant: The world's circumference is 40,075 kilometers, or 24,901 miles.
+
+            user: How do you make a sandwhich?
+            assistant: Things needed to make a sandwhich are it's breads, condiments, meat, and vegetables. Would you like to know more?
+
+            user: How do I send an text to a friend?
+            assistant: Please specify the number of the recipient and the message to send.
+            """
+         },
+    ]
+
 async def Navi(result):
     try:
         global messages, sentence
     
-        message = {'role': 'user', 'content': result}
-        async for part in await AsyncClient().chat(model='NAVI', messages=[message], stream=True):
+        messages.append({'role': 'user', 'content': result})
+        async for part in await AsyncClient().chat(model='NAVI', messages=messages, stream=True):
             content = part['message']['content'] #seperates the sentence.
             sentence += content
             while any(EndsWith in sentence for EndsWith in ['.', '?', '!']): #SENTENCE FINDER
@@ -129,7 +197,7 @@ async def Navi(result):
         print(e)
         
         
-        
+
     
 
 
@@ -144,25 +212,33 @@ async def TextToSpeech(response):
     sd.play(audio_output, samplerate=22050)  
     sd.wait()  
     
-
 async def main():
-    #audio
-    recordresult = False
-    try:
-        recordtask = asyncio.create_task(Record())
-        recordresult = await recordtask
-        transcribetask = asyncio.create_task(Transcribe(recordresult))
-        
-        
-        transcriberesult = await transcribetask 
-        print(transcriberesult)
-            
-        #brain
-        braintask = asyncio.create_task(Navi(transcriberesult))
-        brainresult = await braintask
-        print (brainresult)
-    except Exception as e:
-        print(e)
+    while True:
+        recordresult = False
+        NaviCalled = False
+        try:
+            NaviWaitingTask = asyncio.create_task(WaitForNAVI(NaviCalled))
+            NaviCalled = await NaviWaitingTask 
+
+            if NaviCalled == True:
+                recordtask = asyncio.create_task(Record())
+                recordresult = await recordtask 
+                print("transcribe")
+
+                transcribetask = asyncio.create_task(Transcribe(recordresult))
+                transcriberesult = await transcribetask 
+                print(transcriberesult)
+                
+                print("brain task should work...")
+                braintask = asyncio.create_task(Navi(transcriberesult))
+                brainresult = await braintask
+                print (brainresult)
+
+        except Exception as e:
+            print(e)
+        except KeyboardInterrupt:
+            print("Keyboard Interrupted")
+            break
     
 
 asyncio.run(main())
