@@ -18,9 +18,36 @@ import sounddevice as sd
 import asyncio 
 import re #to fix the wordnone issue 
 import speech_recognition as sr
-import pyttsx3
 
-#for emotion detection
+sroptions = 0
+#FOR SPEECH RECOGNITION
+for index, name in enumerate(sr.Microphone.list_microphone_names()):
+    print(f"{index}: {name}")
+    sroptions = index
+
+while True:
+    srchoice = int(input("Please input a choice: "))
+    if -1<srchoice<sroptions:
+        print("using that choice!")
+        break
+    else:
+        print("wrong, try again")
+
+#FOR SOUND DEVICE
+import sounddevice as sd
+for i, dev in enumerate(sd.query_devices()):
+    print(f"{i}: {dev['name']} — output channels: {dev['max_output_channels']}")
+    sroptions = i
+
+while True:
+    srchoice = int(input("Please input a choice: "))
+    if -1<srchoice<sroptions:
+        print("using that choice!")
+        break
+    else:
+        print("wrong, try again")
+
+#for emotion detectionsr
 tokenizer = RobertaTokenizerFast.from_pretrained("arpanghoshal/EmoRoBERTa")
 emotion = pipeline('sentiment-analysis', model='arpanghoshal/EmoRoBERTa')
 
@@ -33,14 +60,27 @@ url = "http://localhost:11434/api/generate"
 
 print("Initialization complete. Ready to process input.")
 
-messages=[]
 
-shareR = 0
-lock = asyncio.Lock()
+#TTS MICROPHONE
+def TTSMicDevice(name_fragment):
+    devices = sd.query_devices()
+    for i, device in enumerate(devices):
+        if name_fragment.lower() in device['name'].lower() and device['max_output_channels'] > 0:
+            return i
+    raise ValueError(f"No output device containing '{name_fragment}' found.")
 
+output_device_index = TTSMicDevice("CABLE-A Input")
+
+# Play the audio to VB-CABLE A
+audio = tts.tts("Hello there, I am NAVI, your personal assistant within the WIRED. How may I help you?")
+sd.play(audio, samplerate=22050, device=output_device_index, blocking=True)
+#-----------------------------
+
+
+
+#START OF PROGRAM===================================================
 NAVINames = ['Navi', 'Javi', 'Mandy', 'Bambi', 'Ravi', 'Hanabi']
 NAVICallWords = [CallWords.lower() for CallWords in NAVINames]
-
 Recognizer = sr.Recognizer()
 
 async def WaitForNAVI(NaviCalled):
@@ -48,7 +88,7 @@ async def WaitForNAVI(NaviCalled):
     global NAVICallWords
 
     while NaviCalled is False:  # Wait until the call word is heard
-        print("NAVI IS BEING WAITED ON...")
+        print(".")
         try:
             with sr.Microphone() as mic:
                 Recognizer.adjust_for_ambient_noise(mic, duration=0.2)
@@ -74,9 +114,10 @@ async def WaitForNAVI(NaviCalled):
             continue
         except KeyboardInterrupt:
             print("Keyboard Interrupted")
-            break
+            NaviCalled = False
+            return NaviCalled
     
-    return NAVICallSign
+    return NaviCalled
 
 async def Record():
     global NAVICallSign
@@ -205,11 +246,15 @@ async def Emotion(response):
         emotion_labels = emotion(response)
         print(emotion_labels)
 
+
+
+
 async def TextToSpeech(response):
+
     #text to speech
     print(response)
     audio_output = tts.tts(response)
-    sd.play(audio_output, samplerate=22050)  
+    sd.play(audio_output, samplerate=22050, device=output_device_index, blocking=True)
     sd.wait()  
     
 async def main():
