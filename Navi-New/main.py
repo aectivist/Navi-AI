@@ -27,7 +27,7 @@ for index, name in enumerate(sr.Microphone.list_microphone_names()):
 
 while True:
     srchoice = int(input("Please input a choice: "))
-    if -1<srchoice<sroptions:
+    if -1 < srchoice < sroptions:
         print("using that choice!")
         break
     else:
@@ -40,8 +40,8 @@ for i, dev in enumerate(sd.query_devices()):
     sroptions = i
 
 while True:
-    srchoice = int(input("Please input a choice: "))
-    if -1<srchoice<sroptions:
+    sdchoice = int(input("Please input a choice: "))
+    if -1<sdchoice<sroptions:
         print("using that choice!")
         break
     else:
@@ -73,6 +73,7 @@ output_device_index = TTSMicDevice("CABLE-A Input")
 
 # Play the audio to VB-CABLE A
 audio = tts.tts("Hello there, I am NAVI, your personal assistant within the WIRED. How may I help you?")
+sd.play(audio, samplerate=22050, device=output_device_index, blocking=True)
 sd.play(audio, samplerate=22050, device=output_device_index, blocking=True)
 #-----------------------------
 
