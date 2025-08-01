@@ -19,30 +19,42 @@ import asyncio
 import re #to fix the wordnone issue 
 import speech_recognition as sr
 
+import pyaudio
+
+p = pyaudio.PyAudio()
+device_count = p.get_device_count()
+print(device_count)
+
 sroptions = 0
 #FOR SPEECH RECOGNITION
-for index, name in enumerate(sr.Microphone.list_microphone_names()):
-    print(f"{index}: {name}")
-    sroptions = index
+#for index, name in enumerate(sr.Microphone.list_microphone_names()):
+#    print(f"{index}: {name}")
+#    sroptions = index
 
-while True:
-    srchoice = int(input("Please input a choice: "))
-    if -1 < srchoice < sroptions:
-        print("using that choice!")
-        break
-    else:
-        print("wrong, try again")
+#while True:
+#    srchoice = int(input("Please input a choice: "))
+#    if -1 < srchoice < sroptions:
+#        print("using that choice!")
+#        break
+#    else:
+#        print("wrong, try again")
 
 #FOR SOUND DEVICE
 import sounddevice as sd
+sdevice = []
 for i, dev in enumerate(sd.query_devices()):
     print(f"{i}: {dev['name']} — output channels: {dev['max_output_channels']}")
+    sdevice.append(dev['name'])
     sroptions = i
 
+print (sdevice)
 while True:
     sdchoice = int(input("Please input a choice: "))
     if -1<sdchoice<sroptions:
         print("using that choice!")
+        output_device_index2 = sdevice[sdchoice]
+        print("Chosen option = " + output_device_index2)
+        sdevice = []
         break
     else:
         print("wrong, try again")
@@ -73,8 +85,8 @@ output_device_index = TTSMicDevice("CABLE-A Input")
 
 # Play the audio to VB-CABLE A
 audio = tts.tts("Hello there, I am NAVI, your personal assistant within the WIRED. How may I help you?")
-sd.play(audio, samplerate=22050, device=output_device_index, blocking=True)
-sd.play(audio, samplerate=22050, device=output_device_index, blocking=True)
+sd.play(audio, samplerate=22050)
+#sd.play(audio, samplerate=22050, device=output_device_index2, blocking=False)
 #-----------------------------
 
 
@@ -255,7 +267,7 @@ async def TextToSpeech(response):
     #text to speech
     print(response)
     audio_output = tts.tts(response)
-    sd.play(audio_output, samplerate=22050, device=output_device_index, blocking=True)
+    sd.play(audio_output, samplerate=22050)
     sd.wait()  
     
 async def main():
