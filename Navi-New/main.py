@@ -8,6 +8,7 @@ import numpy as np
 import time
 import sys
 import ollama
+import subprocess
 from ollama import AsyncClient
  
 from TTS.api import TTS
@@ -20,44 +21,11 @@ import re #to fix the wordnone issue
 import speech_recognition as sr
 
 import pyaudio
+import sys
 
 p = pyaudio.PyAudio()
 device_count = p.get_device_count()
 print(device_count)
-
-sroptions = 0
-#FOR SPEECH RECOGNITION
-#for index, name in enumerate(sr.Microphone.list_microphone_names()):
-#    print(f"{index}: {name}")
-#    sroptions = index
-
-#while True:
-#    srchoice = int(input("Please input a choice: "))
-#    if -1 < srchoice < sroptions:
-#        print("using that choice!")
-#        break
-#    else:
-#        print("wrong, try again")
-
-#FOR SOUND DEVICE
-import sounddevice as sd
-sdevice = []
-for i, dev in enumerate(sd.query_devices()):
-    print(f"{i}: {dev['name']} — output channels: {dev['max_output_channels']}")
-    sdevice.append(dev['name'])
-    sroptions = i
-
-print (sdevice)
-while True:
-    sdchoice = int(input("Please input a choice: "))
-    if -1<sdchoice<sroptions:
-        print("using that choice!")
-        output_device_index2 = sdevice[sdchoice]
-        print("Chosen option = " + output_device_index2)
-        sdevice = []
-        break
-    else:
-        print("wrong, try again")
 
 #for emotion detectionsr
 tokenizer = RobertaTokenizerFast.from_pretrained("arpanghoshal/EmoRoBERTa")
@@ -70,9 +38,26 @@ tts = TTS(model_name="tts_models/en/ljspeech/vits", progress_bar=False, gpu=torc
 #ollama 
 url = "http://localhost:11434/api/generate"
 
+
+#VSEEFACE
 print("Initialization complete. Ready to process input.")
 
+VseeFaceInit = subprocess.Popen(r"C:\Users\aecti\Downloads\vtuber\VSeeFace-v1.13.38c2\VSeeFace\VSeeFace.exe")
 
+#Checking to see if the user is done configuring VSEEFACE 
+while True:
+    ReadyOption = input("Are you ready? Y/N: ")
+    if  ReadyOption == 'y' or ReadyOption == 'Y':
+        print("Lets start!")
+        break
+    elif  ReadyOption == 'n' or ReadyOption == 'N':
+        print("good bye!")
+        VseeFaceInit.terminate()
+        sys.exit(0)
+        break
+    else:
+        print("Try again")
+    
 #TTS MICROPHONE
 def TTSMicDevice(name_fragment):
     devices = sd.query_devices()
@@ -81,13 +66,47 @@ def TTSMicDevice(name_fragment):
             return i
     raise ValueError(f"No output device containing '{name_fragment}' found.")
 
-output_device_index = TTSMicDevice("CABLE-A Input")
 
-# Play the audio to VB-CABLE A
-audio = tts.tts("Hello there, I am NAVI, your personal assistant within the WIRED. How may I help you?")
-sd.play(audio, samplerate=22050)
-#sd.play(audio, samplerate=22050, device=output_device_index2, blocking=False)
+
+# Play TTS for test
+
+
+import threading
+def TTSMicDevice(name_fragment):
+    devices = sd.query_devices()
+    for i, device in enumerate(devices):
+        if name_fragment.lower() in device['name'].lower() and device['max_output_channels'] > 0:
+            return i
+    raise ValueError(f"No output device containing '{name_fragment}' found.")
+
+def match_channels(audio_data, channels):
+    return np.tile(audio_data.reshape(-1, 1), (1, channels))
+
+def play_on_device(audio_data, device, samplerate, channels):
+    with sd.OutputStream(device=device, samplerate=samplerate, channels=channels, dtype='float32') as stream:
+        stream.write(audio_data)
+
+async def choiceForTTS(audio):
+    output_device_index = TTSMicDevice("CABLE-A")
+    output_speaker = TTSMicDevice("Speakers")
+
+    channels = 2
+    samplerate = 22050
+
+    audio_data = np.array(audio, dtype=np.float32)
+    audio_multich = match_channels(audio_data, channels)
+
+    # Create two threads to play audio aatst
+    thread1 = threading.Thread(target=play_on_device, args=(audio_multich, output_speaker, samplerate, channels))
+    thread2 = threading.Thread(target=play_on_device, args=(audio_multich, output_device_index, samplerate, channels))
+
+    thread1.start()
+    thread2.start()
+
+    thread1.join()
+    thread2.join()
 #-----------------------------
+
 
 
 
@@ -245,8 +264,10 @@ async def Navi(result):
                     if EndsWith in sentence:
                         complete_sentence, sentence = sentence.split(EndsWith, 1)
                         newCompleteSentence = str(complete_sentence + EndsWith)
-                        TextToSpeechTask = asyncio.create_task(TextToSpeech(newCompleteSentence))
-                        await TextToSpeechTask
+                        
+                        audio_output = tts.tts(newCompleteSentence)
+                        TextToSpeechDouble = asyncio.create_task(choiceForTTS(audio_output))
+                        await TextToSpeechDouble
     except Exception as e:
         print(e)
         
@@ -262,15 +283,10 @@ async def Emotion(response):
 
 
 
-async def TextToSpeech(response):
-
-    #text to speech
-    print(response)
-    audio_output = tts.tts(response)
-    sd.play(audio_output, samplerate=22050)
-    sd.wait()  
-    
 async def main():
+    audio = tts.tts("Hello there, I am NAVI, your personal assistant within the WIRED. How may I help you?")
+    TTSVoiceCheck = asyncio.create_task(choiceForTTS(audio))
+    await TTSVoiceCheck
     while True:
         recordresult = False
         NaviCalled = False
@@ -297,6 +313,6 @@ async def main():
         except KeyboardInterrupt:
             print("Keyboard Interrupted")
             break
-    
+    VseeFaceInit.terminate()
 
 asyncio.run(main())
