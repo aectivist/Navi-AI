@@ -1,8 +1,8 @@
 import ollama 
 import json
-from SettingsAPI_Disc import weather_api_key
+from NaviApiKeys import weather_api_key
 
-from recordVC.shared.discordTools import get_weather, get_stock_price, code_function, Doing_Search_Now
+from tools.toolsFunctions import get_weather, get_stock_price, code_function, Doing_Search_Now
 Navi_Function_Usecase = 0
 Function_Passed = 0
 
@@ -55,6 +55,34 @@ tools_list = [ #Only to note but the weather model was only implemented for proo
                                 "city": {"type": "string", "description": "City name to check weather for"}
                             },
                             "required": ["city"]
+                        }
+                    }
+                },
+                {
+                    "type": "function",
+                    "function": {
+                        "name": "code_function",
+                        "description": "Generates code and outputs it into a file.",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "user_prompt": {"type": "string", "description": "Pass the user's prompt here without interpretation or revision."}
+                            },
+                            "required": ["user_prompt"]
+                        }
+                    }
+                },
+                {
+                    "type": "function",
+                    "function": {
+                        "name": "Doing_Search_Now",
+                        "description": "Searches items on the web.",
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "user_prompt": {"type": "string", "description": "Pass the user's prompt here without interpretation or revision."}
+                            },
+                            "required": ["user_prompt"]
                         }
                     }
                 }
@@ -120,5 +148,5 @@ def NAVI_FUNCTION(prompt, messageX):
     
     
     # Generate final response after all tool calls
-    return response['message']['content']
+    return messages
     

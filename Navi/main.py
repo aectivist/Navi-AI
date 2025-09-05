@@ -21,7 +21,7 @@ import re #to fix the wordnone issue
 import speech_recognition as sr
 
 import pyaudio
-import sys
+from task import NAVI_FUNCTION
 
 p = pyaudio.PyAudio()
 device_count = p.get_device_count()
@@ -255,7 +255,7 @@ async def Navi(result):
     try:
         global messages, sentence
     
-        messages.append({'role': 'user', 'content': result})
+        messages = NAVI_FUNCTION(result, messages)
         async for part in await AsyncClient().chat(model='NAVI', messages=messages, stream=True):
             content = part['message']['content'] #seperates the sentence.
             sentence += content

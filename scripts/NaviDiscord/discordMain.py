@@ -1,10 +1,13 @@
 import SettingsAPI_Disc
-import random
 import discord
 from discord.ext import commands
-import ollama
-import discordNaviTasks
 
+import sys
+ # Adjust the path as needed
+import os
+
+from discordNaviTasks import NAVI_FUNCTION
+import ollama
 #ollama 
 url = "http://localhost:11434/api/generate"
 
@@ -46,7 +49,7 @@ def run():
                     "role": "user",
                     "content": input})
                 
-                output = str(discordNaviTasks.DISCORD_NAVI_FUNCTION(input, contexts))
+                output = str(NAVI_FUNCTION(input, contexts))
                 contexts.append({
                     "role": "assistant",
                     "content": output})
@@ -71,7 +74,7 @@ def run():
             Navi_Reply_Status = True
 
     async def ping(ctx):
-        await ctx.message.author.send("Hello")
+        await ctx.message.author.send("pong")
         #discord.utils.get()
             
 
