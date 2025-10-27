@@ -10,3 +10,4 @@ scripts/NaviDiscord/recordVC
 Navi/NaviApiKeys.py
 *.mp4
 scripts/FFTCS2-NAVI
+*.pyc
