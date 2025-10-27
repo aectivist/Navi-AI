@@ -20,6 +20,49 @@ import asyncio
 import re #to fix the wordnone issue 
 import speech_recognition as sr
 
+#-0-----------Literal fucking mess
+import tkinter as tk
+import vlc
+root = tk.Tk()
+
+root.title("VLC mood player")
+
+vlc_instance=vlc.Instance()
+player = vlc_instance.media_player_new()
+
+def MoodPlayer(mood): 
+    global player
+    if mood == 'happy':
+        file_path = r"C:\Users\aecti\OneDrive\Desktop\Projects\AI\NAVI-OFFICIAL\Navi-AI\Navi\assets\happy2.mp4"
+    elif mood == 'neutral':
+        file_path = r"C:\Users\aecti\OneDrive\Desktop\Projects\AI\NAVI-OFFICIAL\Navi-AI\Navi\assets\happy.mp4"
+    elif mood == 'serious':
+        file_path = r"C:\Users\aecti\OneDrive\Desktop\Projects\AI\NAVI-OFFICIAL\Navi-AI\Navi\assets\serious2.mp4"
+    elif mood == 'angry':
+        file_path = r"C:\Users\aecti\OneDrive\Desktop\Projects\AI\NAVI-OFFICIAL\Navi-AI\Navi\assets\angry2.mp4"
+    elif mood == 'sad':
+        file_path = r"C:\Users\aecti\OneDrive\Desktop\Projects\AI\NAVI-OFFICIAL\Navi-AI\Navi\assets\sad.mp4"
+    else:
+        file_path = r"C:\Users\aecti\OneDrive\Desktop\Projects\AI\NAVI-OFFICIAL\Navi-AI\Navi\assets\happy2.mp4"
+    
+    if not os.path.exists(file_path):
+        print("File not found:", file_path)
+        return
+    
+    file = vlc.MediaPlayer(file_path)
+    player.play()
+    loop()
+
+def loop():
+    if player.get_state() == vlc.State.Ended:
+        player.stop()
+        player.play()
+    root.after(500, loop)
+
+MoodPlayer("happy")
+
+#---Fix this later, I'm too fucking tired for this bullshit
+
 import pyaudio
 from task import NAVI_FUNCTION
 
@@ -43,7 +86,7 @@ url = "http://localhost:11434/api/generate"
 print("Initialization complete. Ready to process input.")
 
 VseeFaceInit = subprocess.Popen(r"C:\Users\aecti\Downloads\vtuber\VSeeFace-v1.13.38c2\VSeeFace\VSeeFace.exe")
-
+root = tk.Tk()
 #Checking to see if the user is done configuring VSEEFACE 
 while True:
     ReadyOption = input("Are you ready? Y/N: ")
@@ -266,8 +309,10 @@ async def Navi(result):
                         newCompleteSentence = str(complete_sentence + EndsWith)
                         
                         audio_output = tts.tts(newCompleteSentence)
+                        EmotionTask = asyncio.create_task(Emotion(newCompleteSentence))
                         TextToSpeechDouble = asyncio.create_task(choiceForTTS(audio_output))
                         await TextToSpeechDouble
+                        await EmotionTask
     except Exception as e:
         print(e)
         
@@ -278,12 +323,15 @@ async def Navi(result):
 
 async def Emotion(response):
         emotion_labels = emotion(response)
+        MOOD = emotion_labels[0]['label']
+        MoodPlayer(MOOD)
         print(emotion_labels)
 
 
 
 
 async def main():
+    
     audio = tts.tts("Hello there, I am NAVI, your personal assistant within the WIRED. How may I help you?")
     TTSVoiceCheck = asyncio.create_task(choiceForTTS(audio))
     await TTSVoiceCheck
@@ -316,3 +364,4 @@ async def main():
     VseeFaceInit.terminate()
 
 asyncio.run(main())
+root.mainloop()
