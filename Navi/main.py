@@ -29,7 +29,7 @@ root.title("VLC mood player")
 
 vlc_instance=vlc.Instance()
 player = vlc_instance.media_player_new()
-
+"""
 def MoodPlayer(mood): 
     global player
     if mood == 'happy':
@@ -60,7 +60,7 @@ def loop():
     root.after(500, loop)
 
 MoodPlayer("happy")
-
+"""
 #---Fix this later, I'm too fucking tired for this bullshit
 
 import pyaudio
